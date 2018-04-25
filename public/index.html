@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    
+    <script type="text/javascript" src="static/js/cleaner.js"></script>
+    <script type="text/javascript" src="static/js/samples.js"></script>
+  
+
+    <title>Hello, world!</title>
+    
+  </head>
+  <body>
+        <div class="container-fluid row">
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper" class="sidebar span8 col col-md-3 col-sx-3 border">
+                <label for="steps" id="justlabel">Enter your steps here:</label>
+                <p><i>(Line by Line)</i></p>
+                <div class="form-group col-md-6">
+                    <label for="samples">Samples</label>
+                    <select name="samples" id="samples" onchange="samplesChanger()">
+                        <option value=0>---</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                    </select>
+                </div>
+                <textarea id="robot-steps" rows="4" name="steps" class="border" placeholder="Robot steps"></textarea><br>
+                <button type="submit" value="Submit" class="btn btn-primary" onclick="submitRobotActions()">Do it..</button>
+                <div id="result-div" class="primary border mt-2">
+                    <h5>Some data will come here</h5>
+                </div>
+            </div>
+            <!-- /#sidebar-wrapper -->
+    
+            <!-- Page Content -->
+            <div id="page-content-wrapper" class="col col-md-9 col-sx-9">
+                <div class="container-fluid">
+                    <h1>Simple Sidebar</h1>
+                    <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
+                    <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
+                    <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
+                </div>
+            </div>
+            <!-- /#page-content-wrapper -->
+    
+        </div>
+        
+        <script type="text/javascript">
+
+            function submitRobotActions()
+            {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                      // Action to be performed when the document is read;
+                      console.log(this.responseText);
+                      var cResponseData = JSON.parse(this.responseText);
+                      console.log(cResponseData);
+                      document.getElementById('result-div').innerHTML = cResponseData;
+                    }
+                };
+                
+                const currentData = document.getElementById("robot-steps").value;
+                xhttp.open("POST", "processRobotData", true);
+                xhttp.setRequestHeader("Content-Type", "application/json");
+                var data = JSON.stringify({ info: currentData });
+                xhttp.send(data);
+                
+                
+                // window.fetch('processRobotData', {
+                //   method: 'POST',
+                //   body: JSON.stringify({ info: 'data' }),
+                // }).then((resolve)=>{console.log(resolve.body)}, (reject)=>{console.log(reject)});
+            }
+        </script>
+    </body>
+</html>
