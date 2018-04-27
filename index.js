@@ -16,7 +16,6 @@ const app = express();
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-console.log('index __dirname', __dirname);
 app.use('/static', express.static(path.join(__dirname, 'public')));
 app.use('/robots',robots);
 
