@@ -15,7 +15,7 @@
     
     <script type="text/javascript" src="static/js/cleaner.js"></script>
     <script type="text/javascript" src="static/js/samples.js"></script>
-  
+    <script type="text/javascript" src="static/main.js"></script>
 
     <title>Hello, world!</title>
     
@@ -40,8 +40,12 @@
                 </div>
                 <textarea id="robot-steps" rows="4" name="steps" class="border" placeholder="Robot steps"></textarea><br>
                 <button type="submit" value="Submit" class="btn btn-primary" onclick="submitRobotActions()">Do it..</button>
-                <div id="result-div" class="primary border mt-2">
-                    <h5>Some data will come here</h5>
+                
+                <div id="result-div-wrapper" class="primary border mt-2">
+                    <label for="result-div">Inputs Validation:</label>
+                    <div id="result-div" class="primary border mt-2">
+                        <h5>Valid steps only will be executed here</h5>
+                    </div>
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
@@ -59,33 +63,5 @@
     
         </div>
         
-        <script type="text/javascript">
-
-            function submitRobotActions()
-            {
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                      // Action to be performed when the document is read;
-                      console.log(this.responseText);
-                      var cResponseData = JSON.parse(this.responseText);
-                      console.log(cResponseData);
-                      document.getElementById('result-div').innerHTML = cResponseData;
-                    }
-                };
-                
-                const currentData = document.getElementById("robot-steps").value;
-                xhttp.open("POST", "processRobotData", true);
-                xhttp.setRequestHeader("Content-Type", "application/json");
-                var data = JSON.stringify({ info: currentData });
-                xhttp.send(data);
-                
-                
-                // window.fetch('processRobotData', {
-                //   method: 'POST',
-                //   body: JSON.stringify({ info: 'data' }),
-                // }).then((resolve)=>{console.log(resolve.body)}, (reject)=>{console.log(reject)});
-            }
-        </script>
     </body>
 </html>

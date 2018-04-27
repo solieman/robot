@@ -4,7 +4,8 @@
   "description": "small robot navigator",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -24,5 +25,8 @@
     "bootstrap": "^4.1.0",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.3"
   }
 }

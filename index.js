@@ -45,13 +45,7 @@ router.post('/processRobotData', function (req, res) {
     
   }
   
-  const data = {
-      a:123,
-      b:456,
-      c:789
-  };
-  
-  res.send(JSON.stringify(data));
+  res.send('Done...');
 });
 
 
