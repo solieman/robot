@@ -14,7 +14,10 @@ function submitRobotActions(){
     const cleanData = cleanUserInput(currentData);
     document.getElementById('result-div').innerHTML = "";
     document.getElementById('result-div').appendChild(cleanData.view);
-    executeValiedData(cleanData.data);
+    const clientSideResult = executeValidData(cleanData.data);
+    
+    document.getElementById('client-side-processing-result').innerHTML = "";
+    document.getElementById('client-side-processing-result').appendChild(drawIt(clientSideResult));
     
     xhttp.open("POST", "processRobotData", true);
     xhttp.setRequestHeader("Content-Type", "application/json");

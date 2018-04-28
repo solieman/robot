@@ -1,12 +1,11 @@
 class robot {
-    constructor(x=0,y=0,f="north") { 
+    constructor(x=0,y=0,f="") { 
         this.x = x,
         this.y = y,
         this.f = f
     }
     
     place (positionData){
-        console.log(positionData.split(','));
         const cleanData = positionData.split(',');
         if(cleanData[0] >= 0 && cleanData[0] < 5 && cleanData[1] >= 0 && cleanData[1] < 5 ) {
             this.x = Number(cleanData[0]);
@@ -20,26 +19,26 @@ class robot {
     
     move () {
         if (this.f === 'north') {
-            if (this.x < 4) {
-                this.x ++;
+            if (this.y < 4) {
+                this.y ++;
             } else {
                 console.log('Not a valied move, robot can not move to north, this step will be ignored');
             }
         } else if (this.f === 'south') {
-            if (this.x > 0) {
-                this.x --;
+            if (this.y > 0) {
+                this.y --;
             } else {
                 console.log('Not a valied move, robot can not move to south, this step will be ignored');
             }
         } else if (this.f === 'east') {
-            if (this.y < 4) {
-                this.y ++;
+            if (this.x < 4) {
+                this.x ++;
             } else {
                 console.log('Not a valied move, robot can not move to east, this step will be ignored');
             }
         } else if (this.f === 'west') {
-            if (this.y > 0) {
-                this.y --;
+            if (this.x > 0) {
+                this.x --;
             } else {
                 console.log('Not a valied move, robot can not move to west, this step will be ignored');
             }
@@ -73,10 +72,21 @@ class robot {
 };
 
 
-let executeValiedData = function(steps) {
+let executeValidData = function(steps) {
     let currentRobot = new robot();
     
-    steps.forEach((step) => {
+    let stepsToExecute = [];
+    
+    
+    for (var i = 0; i < steps.length; i++ ) {
+       if(steps[i].includes('place')){
+           stepsToExecute = steps.slice(i);
+           break;
+       }
+    }
+    
+    
+    stepsToExecute.forEach((step) => {
        switch (step.split(' ')[0]) {
            case 'place':
                currentRobot.place(step.split(' ')[1]);
@@ -98,9 +108,10 @@ let executeValiedData = function(steps) {
                console.log('Report: ', currentRobot);
                // code
                break;
-           
            default:
                // code
        }
     });
+    
+    return(currentRobot);
 };
