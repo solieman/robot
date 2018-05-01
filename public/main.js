@@ -7,6 +7,9 @@ function submitRobotActions(){
           var cResponseData = this.responseText;
           document.getElementById('result-div').innerHTML += cResponseData;
           
+          document.getElementById('server-side-processing-result').innerHTML = "";
+          document.getElementById('server-side-processing-result').appendChild(drawIt(JSON.parse(cResponseData)));
+          
         }
     };
     

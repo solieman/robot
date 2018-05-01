@@ -1,4 +1,5 @@
 function drawIt(robotItem) {
+    console.log('robotItem: ', robotItem);
     const tbl = document.createElement('table');
     tbl.className = "table";
     
@@ -9,6 +10,7 @@ function drawIt(robotItem) {
             var cell1 = row.insertCell(j);
             cell1.innerHTML = i+','+j;
             cell1.className = 'table-bordered';
+            
             if(i === robotItem.y && j === robotItem.x && robotItem.f){
                 cell1.className = 'table-success';
                 cell1.innerHTML = robotItem.f;

@@ -25,27 +25,35 @@ router.get('/', function (req, res) {
     res.sendFile(__dirname + '/public/index.html');
 });
 // define the about route
-router.post('/processRobotData', function (req, res) {
-  
-  console.log(req.body.info);
+router.post('/processRobotData', clean, execute);
+
+
+function clean(req,res,next) {
+  console.log('clean');
   if (req.body.info && req.body.info !== '') {
+    console.log('body info: ', req.body.info);
     const cleanData = cleaner.cleanUserInput(req.body.info);
-    console.log('Our cleanData: ', cleanData);
-    cleanData.forEach((item) => {
-      if (executer[item] && executer[item](item)) {
-        executer[item](item);
-      } else {
-        
-      }
-      
-    });
-    
-  } else {
-    
+    req.cleanData = cleanData.data;
+    console.log('Our cleanData: ', cleanData.data);
+    next();
   }
   
-  res.send('Done...');
-});
+  next();
+}
+
+function execute(req,res) {
+  console.log('execute',req.cleanData);
+  if (req && req.cleanData) {
+    const robotStatus = executer.executeValidData(req.cleanData);
+    if(robotStatus){
+      res.send(robotStatus);
+    }
+  } else {
+    res.send('No valied...');
+  }
+  
+}
+
 
 
 app.listen(port, () => console.log('App listening on port ',port));
